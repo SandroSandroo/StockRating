@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}   
+
+<!-- DISPLAY USER PROFILE -->
+
+<div class="container justify-content-center text-center">
+   <h3 class="display-4 text-center">Profile info@:</h3>
+     <div class="row justify-content-center">
+       <div class="card" style="width: 30rem;">
+       
+        <div class="card-body">
+          <h5 class="card-title">{{ user.username }}</h5>
+          <p class="card-text"> Deleting an account will automatically delete any created watchlist and tickers</p>
+        </div>
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item ">Username:   <span class="text-success">{{ user.username }}</span></li>
+            <li class="list-group-item">First Name: <span class="text-success">{{ user.first_name }}</span></li>
+            <li class="list-group-item">Last Name:  <span class="text-success">{{ user.last_name }}</span></li>
+            <li class="list-group-item">Email:      <span class="text-success">{{ user.email}}</span></li>
+        </ul>
+
+        <div class="card-body">
+            {% if g.user.id == user.id %}
+            <form class="text-center">
+    
+                <button formaction="/users/{{ user.id }}/delete" formmethod="POST" class="btn btn-outline-danger">Delete Account</button>
+                
+                <a class="btn btn-primary" href="/users/{{ user.id }}/edit" role="button">Edit</a>
+    
+            </form>
+            {% endif %}
+
+         </div>
+      </div>
+    </div>                        
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    <!-- LOGIN FORM PAGE-->
+    {% block title %}
+    <h4 class="display-2 text-center">Login</h4>
+    {% endblock %}
+
+    <p class="lead text-center"> New here?  <a stle="text-decoration: none;" href="/register">Register</a></p>
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <form method="POST">  
+                {{ form.hidden_tag() }}
+                
+                {% for field in form 
+                    if field.widget.input_type != 'hidden' %}
+                <div class="form-group">
+                    
+                    {{ field.label(class="m-1") }}
+                    
+                    {{ field(class="form-control") }}
+
+                    {% for err in field.errors %}
+                    <small class="form-text text-danger">
+                        {{ err }}
+                    </small>
+                    {% endfor %}
+                
+                </div> 
+                {% endfor %}
+
+                <div class="form-group text-end mt-3">
+                    
+                    <button class="btn btn-dark btn-md">Login</button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

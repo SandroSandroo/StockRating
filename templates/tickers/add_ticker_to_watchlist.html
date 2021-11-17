@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- SEARCH & ADD ticker in watchlist -->
+<div class="container">
+
+<!-- search form -->
+  <form action="/search"  class="row g-3 bg-dark">
+    <div class="col-2">
+      <h3><i class="fab fa-apple text-success"></i> <i class="fab fa-amazon text-success"></i> <i class="fab fa-google text-success"></i></h3>
+    </div>
+    <div class="col-8">
+      <label for="inputPassword2" class="visually-hidden">ticker</label>
+      <input type="text" name="query" class="form-control" id="query" placeholder="TICKER" >
+    </div>
+    <div class="col-2">
+      <button type="submit" class="btn btn-primary mb-3">SEARCH </button>
+    </div>
+  </form>
+
+  <!-- flash erorr-->
+  <div class="row align-items-end justify-content-center">
+    <div class="col-10">
+      <h1>Add a Ticker to {{ watchlist.name }}</h1>
+
+         <form method="POST">
+           {{form.hidden_tag()}}
+            {% for field in form.errors %}
+             <div class="alert alert-danger">{{ field }}:
+              <ul>
+               {% for error in form.errors[field] %}
+               <li>{{ error }}</li>
+               {% endfor %}
+              </ul>
+             </div>
+            {% endfor %}
+
+    <!-- ticker choose form -->
+            {% for field in form if field.widget.input_type != 'hidden' %}
+              <p>
+              {{field.label}}
+              {{field(class_="form-control col-4")}}
+              </p>
+           {% endfor %}
+
+           <button class="btn btn-success">Add ticker</button>
+        </form>
+    
+    </div>
+   </div>
+
+</div>
+
+{% endblock %}

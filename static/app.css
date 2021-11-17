@@ -1,0 +1,74 @@
+
+
+/* Flash message stylings  */
+
+.success {
+    background-color: #D7F9A3;
+    color: black;
+    
+}
+
+.danger {
+    background-color: #FFB7B7;
+    color: black;
+}
+
+.flash {
+    padding: 25px;
+}
+
+
+
+/* container stylings  */
+.container {
+    padding-top: 8%;
+    padding-bottom: 5%;
+    width: auto;
+    height: auto;
+    background-color: whitesmoke;
+  }
+ 
+/* Navbar stylings  */  
+#nav-basic{
+    color: chartreuse;
+} 
+
+
+.nav-profile-link {
+    display: inline-block;
+
+}
+
+#brand-logo {
+    font-size: 40px;
+    color: coral;
+}
+
+#brand {
+    color: greenyellow;
+}
+
+
+
+
+/* ############### FOOTER ############## */
+
+
+.footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	background-color: #272c31;
+	color: #fff;
+	padding: 1rem 0;
+}
+
+
+.footer p {
+	text-transform: uppercase;
+	font-size: 14px;
+	opacity: 0.6;
+	align-self: center;
+}
+
+/* ################### */

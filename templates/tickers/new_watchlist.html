@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<!-- CREATE NEW WATCHLIST -->
+<div class="container">
+  <div class="row align-items-end justify-content-center">
+    <div class="col-10">
+
+       <h1>Add a new Watchlist!</h1>
+        <form method="POST">
+          <!-- flash if eror -->
+         {{form.hidden_tag()}}
+
+          {% for field in form.errors %}
+           <div class="alert alert-danger">{{ field }}:
+            <ul>
+             {% for error in form.errors[field] %}
+             <li>{{ error }}</li>
+             {% endfor %}
+            </ul>
+           </div>
+          {% endfor %}
+          <!-- watchlist form -->
+           {% for field in form if field.widget.input_type != 'hidden' %}
+             <p>
+             {{field.label}}
+             {{field(class_="form-control col-6")}}
+             </p>
+           {% endfor %}
+          <button class="btn btn-success">Add Watchlist</button>
+        </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

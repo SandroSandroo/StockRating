@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+
+{% block content%}
+
+
+  <!-- DISPLAY stock ticker, symbol search-->
+  
+  <div class="container">
+
+    <form action="/search"  class="row g-3 bg-dark">
+        <div class="col-2">
+          <h3><i class="fab fa-apple text-success"></i> <i class="fab fa-amazon text-success"></i> <i class="fab fa-google text-success"></i></h3>
+        </div>
+        <div class="col-8">
+          <label for="inputPassword2" class="visually-hidden">ticker</label>
+          <input type="text" name="query" class="form-control" id="query" placeholder="TICKER" >
+        </div>
+        <div class="col-2">
+          <button type="submit" class="btn btn-primary mb-3">SEARCH </button>
+        </div>
+      </form>
+
+      <!-- DISPLAY stock CARDS GAINERS ACTIVE AND LOSER-->
+
+    <div class="row m-4">
+<!-- DISPLAY stock GAINERS -->
+      <div class="col">
+        
+        <div class="card"> 
+            <div class="card-header text-success bg-white">
+              <h3>GAINER</h3>
+            </div>
+            <ul class="list-group list-group-flush ">
+                {% if gainer %}
+
+                  {% for i in gainer%}
+                  <form action="/search"> <button class="btn btn-outline-primary" for="btncheck" style="height: 45px;"><input readonly class="form-control_button text-primary "  style="width: 4rem;" type="text"  role="button" name="query"  value="{{i.get('ticker')}}"></button></form> 
+              
+              <ul class="list-group list-group-flush"> 
+                     {% for x in i%}
+                     <li class="list-group-item text-success ">{{x.upper()}}_<span class="badge bg-primary text-wrap " style="width: 6rem;">{{i.get(x)}}</span></li>
+                     {% endfor %}
+                 </ul>
+                 {% endfor %}
+                 {% endif %}
+            </ul>
+          </div>
+      </div>
+<!-- DISPLAY stock ACTIVE -->
+      <div class="col">
+
+        <div class="card" >
+            <div class="card-header text-info bg-white">
+              <h3>ACTIVE</h3>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% if active %}
+
+                  {% for i in active%}
+                  <form action="/search"> <button class="btn btn-outline-primary" for="btncheck" style="height: 45px;"><input readonly class="form-control_button text-primary "  style="width: 4rem;" type="text"  role="button" name="query"  value="{{i.get('ticker')}}"></button></form> 
+
+              <ul class="list-group list-group-flush">
+                     {% for x in i%}
+                     <li class="list-group-item text-success ">{{x.upper()}}_<span class="badge bg-primary text-wrap " style="width: 6rem;">{{i.get(x)}}</span></li>
+                     {% endfor %}
+                 </ul>
+                 {% endfor %}
+                 {% endif %}
+            </ul>
+          </div>
+      </div>
+
+<!-- DISPLAY stock LOSER -->
+      <div class="col">
+
+        <div class="card" >
+            <div class="card-header text-danger bg-white">
+              <h3>LOSER</h3>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% if loser %}
+
+                  {% for i in loser%}
+
+                <form action="/search"> <button class="btn btn-outline-primary" for="btncheck" style="height: 45px;"><input readonly class="form-control_button text-primary "  style="width: 4rem;" type="text"  role="button" name="query"  value="{{i.get('ticker')}}"></button></form> 
+
+              <ul class="list-group list-group-flush">
+                     {% for x in i%}
+                     <li class="list-group-item text-success ">{{x.upper()}}_<span class="badge bg-primary text-wrap " style="width: 6rem;">{{i.get(x)}}</span></li>
+                     {% endfor %}
+                 </ul>
+                 {% endfor %}
+                 {% endif %}
+            </ul>
+          </div>
+      </div>
+
+
+    </div>
+  </div>
+ 
+{% endblock %}

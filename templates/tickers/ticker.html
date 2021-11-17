@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content%}
+
+<!-- DISPLAY stock in details -->
+ {% if data %}
+   <div class="container bg-secondary">
+    <div class="row align-items-end justify-content-center">
+     <div class="col-8">
+ 
+        <div class="card">
+          <div class="card-header text-white bg-dark">
+        </div>
+
+        <ul class="list-group list-group-flush">
+            {% for i in data%}
+          <li class="list-group-item text-warning bg-dark">{{i.upper()}}:<span class="m-2 text-danger">{{data.get(i)}}</span></li>
+            {% endfor %}
+          <li class="list-group-item text-warning bg-dark">RATING:<span class="m-2 text-success"> {{rating}}</span></li>
+          <li class="list-group-item text-warning bg-dark">RECOMMENDATION:<span class="m-2 text-success"> {{ratingRecommendation.upper()}}</span></li>
+          <li class="list-group-item text-warning bg-dark">RATING_SCORE:  <span class="m-2 text-success">{{ratingScore}}</span></li>
+          <li class="list-group-item text-warning bg-dark"> <a class="btn btn-primary" href="/watchlist_choose/{{curr_ticker.id}}"> Add Ticker To Watchlist </a></li>
+        </ul>
+          <!-- DISPLAY company financial growth-->
+          <h4 class="shadow p-3 mb-5 bg-body rounded" > <i class="fas fa-balance-scale-right"></i> Company Financial Growth</h4>
+          
+           {% for i in st%}
+             {% for x in i%}
+             
+             <table class="table">
+              <thead>
+                <tr></tr>
+                  <th scope="col">{{x.upper()}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-success">{{i.get(x)}}</td>
+                </tr>
+              </tbody>
+            </table>
+          
+             {% endfor %}
+           {% endfor%}
+       
+       </div>
+     </div>
+   </div>
+  {% endif %}
+
+{% endblock %}

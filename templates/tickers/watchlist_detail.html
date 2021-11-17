@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+<!-- DISPLAY watchlist in ditails (show tickers inside)-->
+{% block content %}
+<div class="container">
+  <div class="row align-items-end justify-content-center">
+    <div class="col-6">
+
+    {% block title %}
+    <h2 class="display-4 text-center">{{watchlist_id.name}}</h2>
+    {% if watchlist_id.description %}
+    <p class="lead">{{ watchlist_id.description }}</p>
+    {% endif %}
+    {% endblock %}
+
+
+        <div>
+         
+              {% for t in watchlist_id.tickers%}
+              
+              <div class="list-group">
+                <a href="/search/{{t.id}}" class="list-group-item list-group-item-action text-primary">{{t.name}}</a>
+              </div>
+
+              {% endfor%}  
+              
+         </div>
+         
+      </div>
+
+   </div>
+
+         <p>
+          <a class="btn btn-outline-success ms-5" href="/watchlist/{{ watchlist_id.id }}/add_ticker">Add Ticker</a>
+         </p>
+         
+         <form class="text">
+          <button formaction="/watchlist/{{ watchlist_id.id }}/delete" formmethod="POST" class="btn btn-outline-danger ">Delete Watchlist</button>
+        </form>
+
+ </div>
+        
+    
+{% endblock %}

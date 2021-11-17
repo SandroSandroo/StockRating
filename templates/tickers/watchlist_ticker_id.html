@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+
+  <!-- DISPLAY watchlist and by choosing add ticker in -->
+    {% block title %}
+    <h3 class="display-4 text-center">Watchlist</h3>
+    {% endblock %}
+
+    <div class="row align-items-end justify-content-center">
+
+      <div class="col-7">
+
+        <div class="list-group">
+
+         {% if ticker_id %}
+
+           {% for w in watchlist%}
+            <form method="POST">
+                <a href="/watchlist_choose/{{ticker_id.id}}/{{w.id}}" class="list-group-item list-group-item-action text-success ">{{w.name}}</a>
+                
+            </form>      
+           {% endfor%} 
+
+         {% endif %}
+
+         </div>
+
+       </div>
+
+    </div>
+
+ </div>
+    
+{% endblock %}
