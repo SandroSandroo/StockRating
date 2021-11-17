@@ -1,4 +1,5 @@
 
+https://sandro-auth-demo.herokuapp.com/
 
 StockRating
 
@@ -17,4 +18,5 @@ Local Environment: To get the code on your local machine, create a PostgreSQL da
 Deployment
 
 Deployed on Heroku Server
+
 Gunicorn server
