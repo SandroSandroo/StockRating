@@ -125,7 +125,7 @@ def login():
             do_login(user)
             return redirect("/")
 
-        flash("Invalid credentials.", 'danger')
+        flash('Invalid credentials', 'danger')
 
     return render_template('users/login.html', form=form)
 
@@ -203,6 +203,7 @@ def delete_profile(user_id):
     """Deletes profile of signed in user."""
 
     user = User.query.get_or_404(user_id)
+    watchlist = Watchlist.query.filter(Watchlist.user_id == user.id).all()
 
     if not user:
         flash("User does not exist.", "danger")
@@ -216,6 +217,8 @@ def delete_profile(user_id):
         do_logout()
 
         db.session.delete(g.user)
+        for w in watchlist:
+            db.session.delete(w)
         db.session.commit()
 
         flash("You have successfully deleted your account.", "success")
@@ -242,9 +245,9 @@ def create_watchlist():
 
             name = form.name.data
             description = form.description.data
-            new_watchlist = Watchlist(name=name, description=description)
+            new_watchlist = Watchlist(name=name, description=description, user_id=g.user.id)
 
-            g.user.Watchlist.append(new_watchlist)
+            db.session.add(new_watchlist)
             db.session.commit()
             return redirect('/watchlist')
     
@@ -255,7 +258,8 @@ def create_watchlist():
 def show_watchlist():
 
     """ show watchlist"""
-    watchlist = Watchlist.query.all()
+    watchlist = Watchlist.query.filter(Watchlist.user_id == g.user.id).all()
+    
 
     return render_template("tickers/watchlist.html", watchlist=watchlist)
 
@@ -274,17 +278,20 @@ def delete_watchlist(watchlist_id):
     """delete watchlist by id"""
 
     watchlist_id = Watchlist.query.get_or_404(watchlist_id)
+
+    if g.user:
+
+        try:
+            db.session.delete(watchlist_id)
+            db.session.commit()
+            return redirect('/watchlist')
+        
+
+        except Exception as e:
+            flash("Can not delate")
+            return redirect('/watchlist')
+
     
-    try:
-        db.session.delete(watchlist_id)
-        db.session.commit()
-        return redirect('/watchlist')
-
-    except Exception as e:
-        flash("Can not delate")
-        return redirect('/watchlist')
-
-
 
 #==================================================================
 #                           SEARCH TICKER ROUTES
@@ -302,7 +309,7 @@ def search_company():
    
     s = request.args.get("query")
     
-    if len(s) == None:
+    if s == None or len(s) == None:
         return flash("pleas enter valid company Symbol")
     else:
 
@@ -389,10 +396,11 @@ def search_ticker(ticker_id):
 def choose_ticker(ticker_id):
     """ display watchlist where user wants to add ticker"""
 
-    ticker_id = Ticker.query.get_or_404(ticker_id)
-    watchlist = Watchlist.query.all()
+    tickerid = Ticker.query.get_or_404(ticker_id)
+    watchlist = Watchlist.query.filter(Watchlist.user_id == g.user.id).all()
+    
 
-    return render_template("tickers/watchlist_ticker_id.html", watchlist=watchlist, ticker_id=ticker_id)
+    return render_template("tickers/watchlist_ticker_id.html", watchlist=watchlist, tickerid=tickerid)
 
 
 @app.route('/watchlist_choose/<int:ticker_id>/<int:watchlist_id>')
@@ -401,7 +409,8 @@ def add_ticker(ticker_id, watchlist_id):
 
     t_id = Ticker.query.get_or_404(ticker_id)
     w_id = Watchlist.query.get_or_404(watchlist_id)
-
+     
+    
     watchlist_ticker = TickersInWatchlist(symbol_id=t_id.id,
                                   watchlist_id=w_id.id)
     db.session.add(watchlist_ticker)
@@ -411,7 +420,7 @@ def add_ticker(ticker_id, watchlist_id):
 
 
 
-@app.route('/watchlist/<int:watchlist_id>/add_ticker')
+@app.route('/watchlist/<int:watchlist_id>/add_ticker', methods=["GET", "POST"])
 def add_in_watchlist(watchlist_id): 
     """ add more ticker from DB"""
     
