@@ -395,7 +395,7 @@ def choose_ticker(ticker_id):
     return render_template("tickers/watchlist_ticker_id.html", watchlist=watchlist, ticker_id=ticker_id)
 
 
-@app.route('/watchlist_choose/<int:ticker_id>/<int:watchlist_id>', methods=["GET", "POST"])
+@app.route('/watchlist_choose/<int:ticker_id>/<int:watchlist_id>')
 def add_ticker(ticker_id, watchlist_id):
     """ add ticker in watchlist """
 
@@ -411,7 +411,7 @@ def add_ticker(ticker_id, watchlist_id):
 
 
 
-@app.route('/watchlist/<int:watchlist_id>/add_ticker', methods=["GET", "POST"])
+@app.route('/watchlist/<int:watchlist_id>/add_ticker')
 def add_in_watchlist(watchlist_id): 
     """ add more ticker from DB"""
     
