@@ -12,20 +12,21 @@
 
       <div class="col-7">
 
-        <div class="list-group">
-
          {% if ticker_id %}
 
            {% for w in watchlist%}
-            <form method="POST">
+             <div class="list-group">
                 <a href="/watchlist_choose/{{ticker_id.id}}/{{w.id}}" class="list-group-item list-group-item-action text-success ">{{w.name}}</a>
-                
-            </form>      
+             </div>
+                 
            {% endfor%} 
-
+          {% else %}
+           
+            <p class="text-danger">pleas creat first watchlist</p>
+            <button type="button" class="btn btn-outline-success"> <a class="text-dark"  href="/watchlist/create">Create New</a>  </button>
+        
          {% endif %}
 
-         </div>
 
        </div>
 
