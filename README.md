@@ -32,9 +32,9 @@ Routes and Models using Python3 and Flask SQLAlchemy as a database ORM Database 
 <li>get an API key from financialmodelingprep API.</li>
 </ol> 
 <ul>
-> <li> git clone https://github.com/SandroSandroo/StockRating.git</li>
-> <li>python -m venv venv</li>
-> <li>pip3 install -r requirements.txt</li>
-> <li>source venv/bin/activate</li>
-> <li>flask run</li>
+ <li> git clone https://github.com/SandroSandroo/StockRating.git</li>
+ <li>python -m venv venv</li>
+ <li>pip3 install -r requirements.txt</li>
+ <li>source venv/bin/activate</li>
+ <li>python3 -m flask run</li>
 </ul>
