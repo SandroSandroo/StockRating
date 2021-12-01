@@ -14,6 +14,7 @@ Create, Update, Delete, info(Personal,Watchlist,Tickers)
 Data:
 from financialmodelingprep API.
 
+
 Front End:
 HTML templates using Jinja and WTForms for forms Design using Bootstrap, Font Awesome and raw CSS
 
