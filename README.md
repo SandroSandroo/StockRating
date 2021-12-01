@@ -1,6 +1,6 @@
 
 
-StockRating
+<h1>StockRating</h1>
 
 StockRating puts together a comprehensive stock market analysis, company stock description, and gainer, active and loser stocks every day (latest update). Search for a particular ticker and get the stock price, rating recommendation, cash flow, and growth of the company's financial statements
 
