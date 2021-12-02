@@ -314,7 +314,7 @@ def search_company():
     else:
 
         try:
-            search_query = s.upper()
+            search_query = str(s).split().upper()
             obj = APIFunctions()
 
             """ call method get_ticker()"""   
