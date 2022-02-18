@@ -76,7 +76,7 @@ class UserEditForm(FlaskForm):
 
 
 class WatchlistForm(FlaskForm):
-    """Form for adding playlists."""
+    """Form for create new watchlist"""
 
     name = StringField('Watchlist Name', validators=[Length(min=1, max=30), InputRequired()], )
     description = TextAreaField('Watchlist Description', validators=[Length(min=1, max=55), Optional()])
@@ -84,6 +84,6 @@ class WatchlistForm(FlaskForm):
 
 
 class NewTickerForWatchlisForm(FlaskForm):
-    """Form for adding a song to playlist."""
+    """Form for adding ticker in watchlist"""
 
     ticker = SelectField('Add', coerce=int)
