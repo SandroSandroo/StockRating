@@ -46,12 +46,12 @@ Routes and Models using Python3 and Flask SQLAlchemy as a database ORM Database 
 </h4>
 
 ![1](schema''dsgn/DB_disagne_Schema.png)
-![main](schema''dsgn/img/main.png)
-![3](schema''dsgn/img/register.png)
-![home](schema''dsgn/img/home.png)
-![5](schema''dsgn/img/ticker.png)
-![6](schema''dsgn/img/ticker_in_wtlist.png)
-![7](schema''dsgn/img/add_ticker.png)
-![8](schema''dsgn/img/Watchlist.png)
-![9](schema''dsgn/img/profile.png)
+![2](/img/main.png)
+![3](/img/register.png)
+![4](/img/home.png)
+![5](/img/ticker.png)
+![6](/img/ticker_in_wtlist.png)
+![7](/img/add_ticker.png)
+![8](/img/Watchlist.png)
+![9](/img/profile.png)
 
