@@ -15,6 +15,7 @@
 
 <h3>Data:</h3>
 from financialmodelingprep API.
+<a href="https://site.financialmodelingprep.com/developer/docs">FMP API</a>
 
 <h3>Front End:</h3>
 HTML templates using Jinja and WTForms for forms Design using Bootstrap, Font Awesome and raw CSS
@@ -38,3 +39,19 @@ Routes and Models using Python3 and Flask SQLAlchemy as a database ORM Database 
  <li>pip3 install -r requirements.txt</li>
  <li>python3 -m flask run</li>
 </ul>
+
+
+<h4>Because Financial Modeling Prep API Documentation plan is free, sometimes data does not return to the correct object, which I describe as an ERROR! will be
+ <p>"API response ERROR (under CONSTRUCTION sorry)"</p>
+</h4>
+
+![base](schema_dsgn/DB_disagne_schema.png)
+![base](schema_dsgn/img/main.png)
+![base](schema_dsgn/img/register.png)
+![base](schema_dsgn/img/home.png)
+![base](schema_dsgn/img/ticker.png)
+![base](schema_dsgn/img/ticker_in_wtlist.png)
+![base](schema_dsgn/img/add_ticker.png)
+![base](schema_dsgn/img/watchlist.png)
+![base](schema_dsgn/img/profile.png)
+
