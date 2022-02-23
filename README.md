@@ -45,13 +45,13 @@ Routes and Models using Python3 and Flask SQLAlchemy as a database ORM Database 
  <p>"API response ERROR (under CONSTRUCTION sorry)"</p>
 </h4>
 
-![base](schema_dsgn/DB_disagne_schema.png)
-![base](schema_dsgn/img/main.png)
-![base](schema_dsgn/img/register.png)
-![base](schema_dsgn/img/home.png)
-![base](schema_dsgn/img/ticker.png)
-![base](schema_dsgn/img/ticker_in_wtlist.png)
-![base](schema_dsgn/img/add_ticker.png)
-![base](schema_dsgn/img/watchlist.png)
-![base](schema_dsgn/img/profile.png)
+![base](schema dsgn/DB_disagne_Schema.png)
+![base](schema dsgn/img/main.png)
+![base](schema dsgn/img/register.png)
+![base](schema dsgn/img/home.png)
+![base](schema dsgn/img/ticker.png)
+![base](schema dsgn/img/ticker_in_wtlist.png)
+![base](schema dsgn/img/add_ticker.png)
+![base](schema dsgn/img/Watchlist.png)
+![base](schema dsgn/img/profile.png)
 
