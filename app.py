@@ -1,3 +1,5 @@
+from crypt import methods
+from lib2to3 import refactor
 import os
 import re
 from flask import Flask, render_template, request, flash, redirect, session, g
@@ -7,7 +9,7 @@ from helpers import APIFunctions
 
 
 from flask_debugtoolbar import DebugToolbarExtension
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, InvalidRequestError
 from sqlalchemy.orm import query
 from werkzeug.wrappers import response
 
@@ -33,7 +35,7 @@ app.config['SQLALCHEMY_ECHO'] = True
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "it's a secret")
 
-app.debug = True
+app.debug = False
 toolbar = DebugToolbarExtension(app)
 
 
@@ -74,7 +76,7 @@ def do_logout():
 # ################### SIGN UP FORM ####################
 
 @app.route('/register', methods=["GET", "POST"])
-def signup():
+def register():
     """Handle user signup.
 
     Create new user and add to DB. Redirect to home page.
@@ -101,7 +103,7 @@ def signup():
 
         except IntegrityError:
             flash("Username already taken", 'danger')
-            return render_template('/register.html', form=form)
+            return render_template('users/register.html', form=form)
 
         do_login(user)
 
@@ -110,6 +112,7 @@ def signup():
     else:
         return render_template('users/register.html', form=form)
 
+    
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
@@ -287,11 +290,11 @@ def delete_watchlist(watchlist_id):
             return redirect('/watchlist')
         
 
-        except Exception as e:
+        except Exception:
             flash("Can not delate")
             return redirect('/watchlist')
 
-    
+
 
 #==================================================================
 #                           SEARCH TICKER ROUTES
@@ -307,12 +310,14 @@ def search_company():
         API is called and response is returned in JSON format, 
         company information"""
    
-    s = request.args.get("query")
+    s = request.args.get("query", type=str)
     
-    if s == None or len(s) == None:
-        return flash("pleas enter valid company Symbol")
-    else:
+    """ Tickers on the NYSE range from one to five characters long! """
+    if s is None or len(s)>5:
+        flash("pleas enter valid company Symbol", "danger")
+        return redirect("/") 
 
+    else:
         try:
             search_query = str(s).strip().upper()
             obj = APIFunctions()
@@ -322,35 +327,40 @@ def search_company():
             
             """ call method get_rating and loop data"""
             dataRating = obj.get_rating(search_query)
-            for c in dataRating:
-
-               ratingScore = c.get("ratingScore")
-               rating = c.get("rating")
-               ratingRecommendation = c.get("ratingRecommendation")
-
+            
             """ call method get_statement """
             st = obj.get_statement(search_query)
-
-            """ add simbol in DB if ther is no curr symbol """
-            symbol = data.get("symbol")
-            ticker = Ticker.query.all()
             
-            symbol_in_DB = [t.name for t in ticker]
+            if data and dataRating and st == None :
+                flash("API response ERROR (under CONSTRUCTION sorry)", "danger")
+                return redirect("/")
+                
+            else:
+                for c in dataRating:
+                    ratingScore = c.get("ratingScore")
+                    rating = c.get("rating")
+                    ratingRecommendation = c.get("ratingRecommendation")
+                
+                """ add simbol in DB if ther is no curr symbol """
+                
+                symbol = data.get("symbol")
+                ticker = Ticker.query.all()
             
-            if symbol not in symbol_in_DB:
+                symbol_in_DB = [t.name for t in ticker]
+            
+                if symbol not in symbol_in_DB:
 
-                add_ticker = Ticker(name=symbol)
-                db.session.add(add_ticker)
-                db.session.commit()
-
-            curr_ticker = Ticker.query.filter_by(name=symbol).first()    
+                    add_ticker = Ticker(name=symbol)
+                    db.session.add(add_ticker)
+                    db.session.commit()
+           
+                curr_ticker = Ticker.query.filter_by(name=symbol).first()    
 
             return render_template("tickers/ticker.html", data=data, ratingScore=ratingScore, rating=rating, 
                                                           ratingRecommendation=ratingRecommendation, st=st, curr_ticker=curr_ticker)
 
-        except (ValueError, TypeError, IntegrityError, AttributeError):
-
-            flash(" ERROR company symbol does not exist")
+        except (ValueError, TypeError, IntegrityError, AttributeError ):
+            flash(" ERROR company symbol does not exist", 'danger')
             return redirect('/')
 
 
@@ -382,9 +392,9 @@ def search_ticker(ticker_id):
         return render_template("tickers/ticker.html", data=data, ratingScore=ratingScore, rating=rating, 
                                                           ratingRecommendation=ratingRecommendation, st=st, curr_ticker=curr_ticker)
 
-    except (ValueError, TypeError, IntegrityError):
+    except (ValueError, TypeError, IntegrityError, AttributeError):
 
-        flash("company symbol does not exist")
+        flash("company symbol does not exist", 'danger')
         return redirect('/')       
 
 
@@ -445,6 +455,7 @@ def add_in_watchlist(watchlist_id):
 
 
 
+
 #==================================================================
 #                           HOME ROUTE
 #==================================================================
@@ -459,15 +470,18 @@ def homepage():
         obj = APIFunctions()
         """ show gainer"""
         data_gainer = obj.get_most_gainers()
-        gainer = data_gainer.get('mostGainerStock')
-
-        """ show active"""
         data_active = obj.get_most_actives()
-        active = data_active.get('mostActiveStock')
-
-        """ show loser"""
         data_loser = obj.get_most_losers()
-        loser = data_loser.get('mostLoserStock')
+        if data_gainer == None or data_active == None or data_loser == None:
+            flash("API response ERROR (under CONSTRUCTION sorry)", 'danger')
+            return redirect("/")
+        else: 
+            """ show gainer"""  
+            gainer = data_gainer.get('mostGainerStock')
+            """ show active"""
+            active = data_active.get('mostActiveStock')
+            """ show loser"""
+            loser = data_loser.get('mostLoserStock')
 
         return render_template("home.html",gainer=gainer, active=active, loser=loser)
        
