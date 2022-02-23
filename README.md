@@ -2,6 +2,9 @@
 
 <h1>StockRating</h1>
 
+https://stockrating.herokuapp.com/
+<p>200 API requests per day<p>
+
 <h5>StockRating puts together a comprehensive stock market analysis, company stock description, and gainer, active and loser stocks every day (latest update). Search for a particular ticker and get the stock price, rating recommendation, cash flow, and growth of the company's financial statements</h5>
 
 <h3>Features</h3>
@@ -23,6 +26,8 @@ HTML templates using Jinja and WTForms for forms Design using Bootstrap, Font Aw
 <h3>Backend:</h3>
 Routes and Models using Python3 and Flask SQLAlchemy as a database ORM Database using PostgreSQL
 
+<h3>Deployment:</h3>
+Heroku
 
 
 <h3>To get the code on your local machine</h3> 
@@ -43,6 +48,7 @@ Routes and Models using Python3 and Flask SQLAlchemy as a database ORM Database 
 
 <h4>Because Financial Modeling Prep API Documentation plan is free, sometimes data does not return to the correct object, which I describe as an ERROR! will be
  <p>"API response ERROR (under CONSTRUCTION sorry)"</p>
+ 
 </h4>
 
 ![1](/img/DB_disagne_schema.png)
