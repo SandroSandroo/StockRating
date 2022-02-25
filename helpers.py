@@ -1,11 +1,13 @@
 from urllib.request import urlopen
 from urllib.error import HTTPError
 import json
-
+import os
+from myKey import MyApiKey
 from flask.helpers import flash
 
-API_KEY = "56958883a43687bf39a63bd15c3ccec7"
+API_KEY = os.environ.get("FMP_KEY", MyApiKey.key)
 BASE_URL = "https://financialmodelingprep.com/api/v3"
+
 
 
 """ financialmodelingprep.com/api method for python """
@@ -46,7 +48,7 @@ class APIFunctions():
             data = get_jsonparsed_data(url)
             
         except HTTPError:
-            return flash("invalid request")
+            return flash("HTTPError invalid request", "CHECK TICKER", "danger")
         return data
 
 
@@ -58,7 +60,7 @@ class APIFunctions():
         try:
             data = get_jsonparsed_data(url)
         except HTTPError:
-            return ("HTTPError invalid request")
+            return ("HTTPError invalid request", "CHECK TICKER", "danger")
         return data
 
 
@@ -70,7 +72,7 @@ class APIFunctions():
         try:
             data = get_jsonparsed_data(url)
         except HTTPError:
-            return flash("HTTPError invalid request")
+            return flash("HTTPError invalid request", "CHECK TICKER", "danger")
         return data
 
 
@@ -82,7 +84,7 @@ class APIFunctions():
         try:
             data = get_jsonparsed_data(url)
         except HTTPError:
-            return flash("HTTPError invalid request")
+            return flash("HTTPError invalid request","danger")
         return data
 
 
@@ -94,7 +96,7 @@ class APIFunctions():
         try:
             data = get_jsonparsed_data(url)
         except HTTPError:
-            return flash("HTTPError invalid request")
+            return flash("HTTPError invalid request", "danger")
         return data
 
     
@@ -106,5 +108,6 @@ class APIFunctions():
         try:
             data = get_jsonparsed_data(url)
         except HTTPError:
-            return flash("HTTPError invalid request")
+            return flash("HTTPError invalid request", "danger")
         return data
+    
