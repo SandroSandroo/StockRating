@@ -1,9 +1,11 @@
 from crypt import methods
+from distutils.log import ERROR
 from lib2to3 import refactor
 import os
 import re
+from urllib.error import HTTPError
 from flask import Flask, render_template, request, flash, redirect, session, g
-import requests
+
 from helpers import APIFunctions
 
 
@@ -315,7 +317,7 @@ def search_company():
     """ Tickers on the NYSE range from one to five characters long! """
     if s is None or len(s)>5:
         flash("pleas enter valid company Symbol", "danger")
-        return redirect("/") 
+        return render_template("error.html") 
 
     else:
         try:
@@ -469,22 +471,25 @@ def homepage():
         
         obj = APIFunctions()
         """ show gainer"""
-        data_gainer = obj.get_most_gainers()
-        data_active = obj.get_most_actives()
-        data_loser = obj.get_most_losers()
-        if data_gainer == None or data_active == None or data_loser == None:
-            flash("API response ERROR (under CONSTRUCTION sorry)", 'danger')
-            return redirect("/")
-        else: 
-            """ show gainer"""  
-            gainer = data_gainer.get('mostGainerStock')
-            """ show active"""
-            active = data_active.get('mostActiveStock')
-            """ show loser"""
-            loser = data_loser.get('mostLoserStock')
-
-        return render_template("home.html",gainer=gainer, active=active, loser=loser)
+        try:
+            data_gainer = obj.get_most_gainers()
+            data_active = obj.get_most_actives()
+            data_loser = obj.get_most_losers()
+            
+            if data_gainer == None or data_active == None or data_loser == None:
+                return render_template("error.html")
+            else:
+                """ show gainer"""  
+                gainer = data_gainer.get('mostGainerStock')
+                """ show active"""
+                active = data_active.get('mostActiveStock')
+                """ show loser"""
+                loser = data_loser.get('mostLoserStock')
+                return render_template("home.html",gainer=gainer, active=active, loser=loser)
        
+        except(HTTPError):
+            return render_template("error.html")
+        
     return render_template("base.html")
 
 
