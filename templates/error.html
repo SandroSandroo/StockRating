@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+{% block content%}
+
+
+  <!-- DISPLAY stock ticker, symbol search-->
+  
+  <div class="container">
+
+    <form action="/search"  class="row g-3 bg-dark">
+        <div class="col-2">
+          <h3><i class="fab fa-apple text-success"></i> <i class="fab fa-amazon text-success"></i> <i class="fab fa-google text-success"></i></h3>
+        </div>
+        <div class="col-8">
+          <label for="query" class="visually-hidden">ticker</label>
+          <input type="text" name="query" class="form-control" id="query" placeholder="TICKER" >
+        </div>
+        <div class="col-2">
+          <button type="submit" class="btn btn-primary mb-3">SEARCH </button>
+        </div>
+      </form>
+
+      <h3 class="danger" > API request ERROR </h3>
+      
+
+  </div>
+ 
+{% endblock %}
